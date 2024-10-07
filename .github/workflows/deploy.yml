@@ -31,9 +31,23 @@ jobs:
         run: npm run build
 
       # Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+
+      - name: Deploy to production url
+
+        if: github.ref == 'refs/heads/main' 
+
+        uses: JamesIves/github-pages-deploy-action@4.1.4 
         with:
           branch: gh-pages # The branch where you want to deploy (GitHub Pages usually uses gh-pages)
-          folder: dist      # The folder where Vite generates the build (for Vite, it's typically 'dist')
+          folder: dist      # The folder where Vite generates the build (for Vite, it's typically 'dist') 
 
+      - name: Deploy to dev url
+
+        if: github.ref == 'refs/heads/development'
+
+        uses: peaceiris/actions-gh-pages@v3
+
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: prod-gh-pages
