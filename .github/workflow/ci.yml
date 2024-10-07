@@ -1,4 +1,4 @@
-name: Continous integration
+name: Continous Integration
 
 # this will trigger CI on push and pr for main branch only
 # on:
@@ -8,21 +8,23 @@ name: Continous integration
 #  branches:[main]
 
 # this will trigger CI on push and pr for all kind of branches
+
 on:
   push:
   pull_request:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+         runs-on: ubuntu-latest
 
-    steps: 
-     - uses: actions/checkout@v2
-       with:
-           fetch-depth: 0
-     - name: Use Node.js
-       uses: actions/setup-node@v2
-       with:
-        node-version: '20.10.0'
-     - name: Install Deps
-       run: npm install
+         steps: 
+           - uses: actions/checkout@v2
+             with:
+                 fetch-depth: 0
+           - name: Use Node.js
+             uses: actions/setup-node@v2
+             with:
+                 node-version: '20.10.0'
+
+           - name: Install Deps
+             run: npm install
