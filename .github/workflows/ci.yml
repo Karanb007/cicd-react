@@ -1,42 +1,26 @@
-name: CI for Vite React App
+name: Continuos Integration
 
 # Trigger the workflow on pushes to the main branch or pull requests
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the code from the repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      # Step 2: Set up Node.js (specify the version you're using)
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v2
+        with: 
+            fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v2
         with:
           node-version: 20.10.0  # Change to your node version if needed
 
       # Step 3: Install dependencies
-      - name: Install dependencies
+      - name: Install Deps
         run: npm install
 
-      # Step 5: Build the project with Vite
-      - name: Build the project
-        run: npm run build
-
-      # Optional: Cache node_modules to improve build time
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            node-modules-
