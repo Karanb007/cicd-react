@@ -1,39 +1,39 @@
-name: Continuos Deployment
+name: Continuous Deployment
 
 on:
-  push: 
-      branches:
-        - main
+  push:
+    branches:
+      - main
 
 jobs:
-    build-and-deploy:
-           runs-on: ubuntu-latest
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
-           steps:
-              - uses: actions/checkout@v2
-                with:
-                   persist-credentials: false
-              
-              - name: Use Node.js
-                uses: actions/setup-node@v2
-                with: 
-                    node-version: '20.10.0'
-              
-              - name: Install Deps
-                run: npm install 
+    steps:
+      # Checkout the repository
+      - name: Checkout the code
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
 
-              - name: Build
-                run: npm run build
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.10.0'
 
-              - name: Deploy to production
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
 
-                if: github.ref == 'refs/head/main'
+      # Build the project
+      - name: Build the project
+        run: npm run build
 
-                uses: JamesIves/github-pages-deploy-action@4.1.4
-                with: 
-                  branch: gh-pages
-                  folder: dist
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages # The branch where you want to deploy (GitHub Pages usually uses gh-pages)
+          folder: dist      # The folder where Vite generates the build (for Vite, it's typically 'dist')
 
-
-
-    
