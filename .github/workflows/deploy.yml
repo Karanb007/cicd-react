@@ -40,15 +40,16 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.4 
         with:
           branch: gh-pages # The branch where you want to deploy (GitHub Pages usually uses gh-pages)
-          folder: dist      # The folder where Vite generates the build (for Vite, it's typically 'dist') 
+          folder: dist 
+          clean: true     # The folder where Vite generates the build (for Vite, it's typically 'dist') 
 
       - name: Deploy to dev url
 
-        if: github.ref == 'refs/heads/development'
+        if: github.ref == 'refs/heads/development'  
 
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@4.1.4
 
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: prod-gh-pages
+          branch: dev-gh-pages      # Deploy to a separate branch for development
+          folder: dist              # Folder where Vite outputs the build
+          clean: true 
